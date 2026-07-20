@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+.pytest_cache/
+
+# Local secrets -- never commit a real .env
+server/.env
+
+# Local dev database and generated files
+server/audit_bot.db
+server/uvicorn.log
+server/*.log
+
+# Real user-uploaded photos and generated PDF reports -- never belongs in git history.
+server/storage/
+
+# Legacy tool's real customer data (Excel exports, saved audits, uploaded photos) -- business
+# data that shouldn't live in a repo that might later be shared/pushed publicly. The current app
+# no longer reads these at runtime; only the (now one-off, already-run) migration scripts did.
+data/
+saved_audits/
+uploaded_images/
+output_reports/
+logs/
+server/scripts/legacy_audit_snapshot.json
+server/scripts/checklist_summary.txt
+server/scripts/snapshot_check.txt
+server/scripts/rebuild_output.log
+server/scripts/smoke_screenshots/
+
+# Editor/OS cruft
+.DS_Store
+Thumbs.db
+
+# Per-developer local tool config, not project source.
+.claude/settings.local.json
+
+# Ad-hoc debug output from dev sessions.
+server/check_output.txt

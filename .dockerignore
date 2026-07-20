@@ -1,0 +1,26 @@
+# Legacy Streamlit desktop tool -- not part of the deployed web app.
+app.py
+desktop_app.py
+modules/
+data/
+saved_audits/
+uploaded_images/
+output_reports/
+logs/
+venv/
+__pycache__/
+*.pyc
+
+# Never bake real user data or dev secrets into an image.
+server/audit_bot.db
+server/storage/
+server/uvicorn.log
+server/*.log
+server/scripts/legacy_audit_snapshot.json
+server/scripts/smoke_screenshots/
+server/.pytest_cache/
+server/tests/__pycache__/
+
+.git/
+.gitignore
+Start_Audit_Bot_v2.bat

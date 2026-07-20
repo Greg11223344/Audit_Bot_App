@@ -1,0 +1,1230 @@
+{
+  "audit_types": [
+    {
+      "audit_type_key": "machine_audit",
+      "audit_type_label": "Machine Audit (בדיקה מלאה)",
+      "systems": [
+        {
+          "system": "PreFeeder",
+          "sub_modules": [
+            {
+              "sub_module": "Mi Controller/ Upper tornado",
+              "checks": [
+                "Check the cable - Routing, damage",
+                "Check the Molex connectors X3 - Remove and connect back",
+                "Check all the other connectors - No stretching",
+                "Check that all the quick connectors are standard",
+                "Tornado shoulders screws - closed if open need Loctite"
+              ]
+            },
+            {
+              "sub_module": "Pistons",
+              "checks": [
+                "Check no air leakage piston out and open - Tubes are no damage",
+                "Check that the pistons moved smoothly",
+                "Check there is no damage on the pistons",
+                "Limit Sensors condition \nPiston sensors - connected and not free",
+                "Check the piston:\n1. rubbers - Stoppers\n2. springs\n3. no movement/worn between piston element",
+                "Valve electrical connection"
+              ]
+            },
+            {
+              "sub_module": "Safety Frame",
+              "checks": [
+                "Check the sensor - complete no damaged",
+                "Cable routing",
+                "Check the frame sensor using VNC",
+                "Check the springs",
+                "Spring leaf - no deformation"
+              ]
+            },
+            {
+              "sub_module": "Upper belts",
+              "checks": [
+                "Belt tension",
+                "Belt  שחיקה",
+                "Check the  pulley lips",
+                "Encoder and motor cable routing",
+                "Belt thickness check with jig"
+              ]
+            },
+            {
+              "sub_module": "Lift",
+              "checks": [
+                "Garmoshka - check the crews are tight, \nmove up and down and check no damaged, moving smoothly",
+                "Linear rails - deep visual inspection Bearings (small balls under the rail 0 Amy mail), screws",
+                "Lift leveling  X and Y",
+                "Check the lift home position stoppers",
+                "Home position sensor - bottom  sensor is 3-4 mm from the flag",
+                "All the conveyer are not damaged",
+                "Visual check for the motor - no oil, Cable routing",
+                "Igus no Damage"
+              ]
+            },
+            {
+              "sub_module": "Chain system",
+              "checks": [
+                "All the chain is complete",
+                "When the lift down - chain need to be loose",
+                "Greasing on the chain",
+                "Lift going up parallel"
+              ]
+            },
+            {
+              "sub_module": "Separation Tornados move to feeder",
+              "checks": [
+                "Motor - Cables are connected",
+                "Check proper installation, no movement, Hight, cables routing",
+                "Belt - No damage",
+                "Check the cover for correct high, leveled (lower then the belts) and no touching the belts",
+                "Check the Tornado clean - clean all the tornado area with air pressure",
+                "Brackett closing the gap between the tornado and cone at the entrance"
+              ]
+            },
+            {
+              "sub_module": "Light Curtin",
+              "checks": [
+                "Check the LC with no damage",
+                "Cables routing",
+                "LC calibration - No loose, Same Hight, sensitivity",
+                "LC position - During Stack replacement \nSunk in relation to the walls"
+              ]
+            },
+            {
+              "sub_module": "Sensors",
+              "checks": [
+                "Stack alignment - not loose, calibration",
+                "Lift Hight laser  - straight , not loose, cables routing, pointing in parallel"
+              ]
+            },
+            {
+              "sub_module": "TEC",
+              "checks": [
+                "No free wires - check the screws are tight"
+              ]
+            },
+            {
+              "sub_module": "Prefeeder axis",
+              "checks": [
+                "Axis movement home to end, flags aligned with the sensors",
+                "Check the motor cables not touching during movement"
+              ]
+            },
+            {
+              "sub_module": "Air Blowers",
+              "checks": [
+                "moving free by hand",
+                "Operate it using VNC"
+              ]
+            },
+            {
+              "sub_module": "Front operator side Static wall",
+              "checks": [
+                "Check the finger spring"
+              ]
+            },
+            {
+              "sub_module": "Ground wires",
+              "checks": [
+                "Check the cables"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "Feeder",
+          "sub_modules": [
+            {
+              "sub_module": "Helix",
+              "checks": [
+                "Check the Power and Encoder Cables",
+                "Helix rollers visual - parallel",
+                "Home position sensor  - Clean from Dirt",
+                "Post and pre helix sensors - clean",
+                "Gap between the Helix and MH no less than 10mm"
+              ]
+            },
+            {
+              "sub_module": "Gripper Arm",
+              "checks": [
+                "Suction cups",
+                "Sensor - Operated correctly, no damage",
+                "Tubes are not touching, Damage",
+                "Vacuum generator,\nVacuum value by VNC",
+                "Check the Grippers for no free movement - leaner Bearings",
+                "Gripper bearings - not loose, move smoothly",
+                "Move the gripper and check smooth movement"
+              ]
+            },
+            {
+              "sub_module": "Gripper Motor X2",
+              "checks": [
+                "Cable power and encoder routing",
+                "Motor visual check - No oil leakage",
+                "Coupling  - 1mm gap, green plastic complete",
+                "Motor fan  - check that working"
+              ]
+            },
+            {
+              "sub_module": "Gripper Belts",
+              "checks": [
+                "No Belt Damage",
+                "Check the bolts on the pulley KTR no loose, coupling lips not touching other parts"
+              ]
+            },
+            {
+              "sub_module": "Cognex",
+              "checks": [
+                "Target clean,",
+                "Lens - no damage",
+                "Cables routing"
+              ]
+            },
+            {
+              "sub_module": "Weights",
+              "checks": [
+                "Free movement",
+                "The rolls are free",
+                "Stoppers are tight",
+                "Same Hight and aligned"
+              ]
+            },
+            {
+              "sub_module": "Grippers elec. Connections",
+              "checks": [
+                "Check all D type connectors"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "Print Engine Bridge",
+          "sub_modules": [
+            {
+              "sub_module": "Capping",
+              "checks": [
+                "Capping pads - No damaged",
+                "Capping calibration, remove the capping bar and check",
+                "Capping sensor flag - not bent, no damaged"
+              ]
+            },
+            {
+              "sub_module": "Vision",
+              "checks": [
+                "Cables - All cables connected, Molex, routing",
+                "Scanners glass - No ink, damage",
+                "Add picture from the scanners when they are turned off"
+              ]
+            },
+            {
+              "sub_module": "Z Axis",
+              "checks": [
+                "Gear for no leakage",
+                "Lead screw - lubrication",
+                "Sensors - Cable damage, activation",
+                "Rotate the coupling by hand - no movement allowed",
+                "Brakes tubes  routed correct",
+                "Z - belt tension"
+              ]
+            },
+            {
+              "sub_module": "Guides",
+              "checks": [
+                "Clean - Top and bottom",
+                "Sensor - activation",
+                "Move up and down smoothly by hand",
+                "Parallel guides movement",
+                "Motor cable",
+                "Sensors"
+              ]
+            },
+            {
+              "sub_module": "Aerosol Cassettes",
+              "checks": [
+                "Tubes are not bent or damaged - Both sides",
+                "Manifold (service, operator) - all the plugs are closed\nManifolds are clean",
+                "Sensor cable not damaged",
+                "visual inspection - sitting correctly on the rail, Aerosol",
+                "CPC - tubes are sits properly"
+              ]
+            },
+            {
+              "sub_module": "Air knife",
+              "checks": [
+                "Tubes - no damaged, bent",
+                "Manifold - attached Fittings, no air leakage",
+                "Pump - Cables and tubes connections"
+              ]
+            },
+            {
+              "sub_module": "Wiping arm",
+              "checks": [
+                "Check the Motor without leakage",
+                "Smooth movement",
+                "Connection bolts tight",
+                "Belt - worn"
+              ]
+            },
+            {
+              "sub_module": "Ink beams",
+              "checks": [
+                "No ink leakage",
+                "All the tubes are full with ink - no air",
+                "CPC - connections to the beam",
+                "4 screws connections to the bridge"
+              ]
+            },
+            {
+              "sub_module": "IDS panel",
+              "checks": [
+                "CPC connectors sure connected and tight",
+                "No tubes damage or bent",
+                "No valve leakage",
+                "Valve operation via VNC",
+                "Pressure gauge - no leakage"
+              ]
+            },
+            {
+              "sub_module": "FOD",
+              "checks": [
+                "Bar calibration",
+                "Sensor sensitivity",
+                "Sensor cable not damaged"
+              ]
+            },
+            {
+              "sub_module": "Wiping cassettes",
+              "checks": [
+                "Check the WWC sensor",
+                "Check the Valve sealed",
+                "Check that the spitting exist during service",
+                "Waste tank position correct",
+                "Check water leakage"
+              ]
+            },
+            {
+              "sub_module": "Pneumatic panel",
+              "checks": [
+                "All the tubes are connected",
+                "No air leakage",
+                "No oil in the main filter",
+                "No tubes are bent"
+              ]
+            },
+            {
+              "sub_module": "Ink beams - Print Head",
+              "checks": [
+                "All the lock mechanism are factional correct \nYellow rubber",
+                "No leakage"
+              ]
+            },
+            {
+              "sub_module": "IR",
+              "checks": [
+                "Clean, correct pressure",
+                "IR calibration"
+              ]
+            },
+            {
+              "sub_module": "TOF sensor",
+              "checks": [
+                "Calibrated correctly",
+                "Cable routing, Molex connector",
+                "Clean"
+              ]
+            },
+            {
+              "sub_module": "Cleaning system",
+              "checks": [
+                "Check the electrical cabinet",
+                "Check the unit without block holes",
+                "Check the correct assembly installation"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "Media Handling",
+          "sub_modules": [
+            {
+              "sub_module": "Train",
+              "checks": [
+                "Check the blankets",
+                "Bearings - No damage",
+                "Encoders cable - No Banded, locked",
+                "Axiopea box not damaged",
+                "Currant test from Tzabar tool"
+              ]
+            },
+            {
+              "sub_module": "Bus bar",
+              "checks": [
+                "Clean",
+                "No damaged plastics - the bar located inside the plastic",
+                "Less than 3 mm gap in the connection",
+                "Scratches",
+                "Electrical connection"
+              ]
+            },
+            {
+              "sub_module": "Communication cables",
+              "checks": [
+                "No damaged",
+                "Well attached",
+                "Tie raps"
+              ]
+            },
+            {
+              "sub_module": "Motion Sensor (correct name)",
+              "checks": [
+                "Calibrated correctly - sensor gap (4mm)",
+                "Cable routing, Molex connector"
+              ]
+            },
+            {
+              "sub_module": "Axiopea 0",
+              "checks": [
+                "Check all the cables, Molex",
+                "Driver - No movement",
+                "Quick stop brushes - Complete, touching the bus bar (Remove and check)",
+                "Check the screws that holds the Axiopea board"
+              ]
+            },
+            {
+              "sub_module": "Brushes",
+              "checks": [
+                "Brushes complete",
+                "Touching the bus bar"
+              ]
+            },
+            {
+              "sub_module": "Analog vacuum\n(BIT test up 1.5)",
+              "checks": [
+                "Pistons without air leakage",
+                "Klaklak - no damage\nNo ink \nthe rubber is complete",
+                "Tubes - 90 deg. Connections are secured",
+                "Pump - tubes and cable connection\nNo ink exist",
+                "Home position sensors activating in the same time X4"
+              ]
+            },
+            {
+              "sub_module": "Oil system",
+              "checks": [
+                "No oil leakage",
+                "Check the tubes connection",
+                "The tank without damage"
+              ]
+            },
+            {
+              "sub_module": "ACS controller",
+              "checks": [
+                "Pi board connection",
+                "Molex and cables",
+                "Check the fan is working",
+                "Check the Flex cables"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "Linkage Conveyer",
+          "sub_modules": [
+            {
+              "sub_module": "Vacuum blower",
+              "checks": [
+                "Check the tubes connected correctly and no loose",
+                "Pump - connection, tubes and cables"
+              ]
+            },
+            {
+              "sub_module": "Linkage conveyer Belt",
+              "checks": [
+                "Check the belt is complete",
+                "Zipper gap"
+              ]
+            },
+            {
+              "sub_module": "Fan bar",
+              "checks": [
+                "Clean the Fans",
+                "activate all the Fans and check visual for operation"
+              ]
+            },
+            {
+              "sub_module": "Electrical cabinet",
+              "checks": [
+                "Check all the screws are tight",
+                "Check the cables"
+              ]
+            },
+            {
+              "sub_module": "Belt pistons",
+              "checks": [
+                "Check the piston without air leakage",
+                "Check the piston connection - Screws + nuts",
+                "No oil marks",
+                "Check the sensor position and cables",
+                "Activate the piston from the VNC to the sensors(Greg to check if possible)"
+              ]
+            },
+            {
+              "sub_module": "Pneumatic panel",
+              "checks": [
+                "Check all the tubes connected correctly",
+                "Check all the tubes are not bent",
+                "No air leakage"
+              ]
+            },
+            {
+              "sub_module": "Mesh position sensor",
+              "checks": [
+                "Sensor position (check the distance from the belt)",
+                "Cover the sensor to check the pressure change",
+                "Cable routing, damaged and connection"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "Dryer",
+          "sub_modules": [
+            {
+              "sub_module": "Vacuum table",
+              "checks": [
+                "Check the belt is complete",
+                "Check the motor wires connection",
+                "Motor Oil leakage"
+              ]
+            },
+            {
+              "sub_module": "Belt Transportation",
+              "checks": [
+                "Analog sensor (same as LC)",
+                "Check the adjustment piston",
+                "Check the limit sensors"
+              ]
+            },
+            {
+              "sub_module": "IR lamps",
+              "checks": [
+                "Check the bulbs - connected right, bulb connector",
+                "No burn sign on the edges"
+              ]
+            },
+            {
+              "sub_module": "Chiller",
+              "checks": [
+                "Pressure In (bottom gauge) 2.5bar\nPressure out (top gauge) - 4 bar",
+                "No pressure leakage",
+                "All tubes are intact without damage",
+                "The Chiller tank without  damage",
+                "The fan is clear"
+              ]
+            },
+            {
+              "sub_module": "Cassette",
+              "checks": [
+                "Open the cassette and check all the elec. Connections",
+                "Hot air nozzles are clear",
+                "To check the option clean the cassette with air"
+              ]
+            },
+            {
+              "sub_module": "DREC",
+              "checks": [
+                "Check all the connection",
+                "Check cables routing"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "OPV Int.",
+          "sub_modules": [
+            {
+              "sub_module": "Y axis",
+              "checks": [
+                "The walls are not damaged",
+                "check the motor and the gear without oil leakage",
+                "Smooth movement"
+              ]
+            },
+            {
+              "sub_module": "Tornado",
+              "checks": [
+                "Motor - Cables are connected",
+                "Belt tension",
+                "Belt - No damage",
+                "Check proper installation - Friction"
+              ]
+            },
+            {
+              "sub_module": "Mi control",
+              "checks": [
+                "Check the cables routing",
+                "Molex connection"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "OPV",
+          "sub_modules": [
+            {
+              "sub_module": "Water System",
+              "checks": [
+                "Check all the tubes for no Bent",
+                "Check the connector for no leakage",
+                "Check rust on tubes"
+              ]
+            },
+            {
+              "sub_module": "Varnish System",
+              "checks": [
+                "Check all the tubes for no Bent",
+                "Check all the connector for no leakage",
+                "Check all the tubes are locked and secure",
+                "Dry varnish"
+              ]
+            },
+            {
+              "sub_module": "Varnish Chamber",
+              "checks": [
+                "Check for no leakage during engage",
+                "Check the blades",
+                "Check the sealings",
+                "Loose screw in push/pull"
+              ]
+            },
+            {
+              "sub_module": "Anilox",
+              "checks": [
+                "Check the roll without damaged/Cracks",
+                "Check the Gear and Motor no oil leakage",
+                "Check the cables routed correct and no Damage",
+                "No Dry Varnish"
+              ]
+            },
+            {
+              "sub_module": "Applicator",
+              "checks": [
+                "Check the roll without damaged/Cracks",
+                "Check the Gear and Motor no oil leakage",
+                "Check the cables routed correct and no Damage",
+                "No Dry Varnish"
+              ]
+            },
+            {
+              "sub_module": "Impression",
+              "checks": [
+                "Check the roll without damaged",
+                "Clean",
+                "Check the cables routed correct and no Damage",
+                "Check the Gear and Motor no oil leakage"
+              ]
+            },
+            {
+              "sub_module": "F10",
+              "checks": [
+                "Check the tank without dry Varnish",
+                "Stirrer is working",
+                "F10 Weight scale is correct position",
+                "Check the sealing on top of the F10",
+                "F10 Leveled"
+              ]
+            },
+            {
+              "sub_module": "Electrical Cabinet",
+              "checks": [
+                "All the wires are connected and the screws aretight",
+                "Check the cables",
+                "inspect dryer exhaust tubing"
+              ]
+            },
+            {
+              "sub_module": "Dryer System",
+              "checks": [
+                "Check the belt - Worn , positions",
+                "Dryer net for no damage"
+              ]
+            },
+            {
+              "sub_module": "Air Condition",
+              "checks": [
+                "Check the correct Temp - 27",
+                "Check no water condensation"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "Stacker",
+          "sub_modules": [
+            {
+              "sub_module": "Sensors",
+              "checks": [
+                "Check Entrance Photocells and Flaps",
+                "Check Arms Limits sensors",
+                "Check the Waste Cart sensors",
+                "Check the Sample Tray sensors",
+                "Checjk the Lift Up/Lift Down",
+                "Check the Front Limit Detectors",
+                "Check Front Limit Up sensor",
+                "Check the Front Limit Forth-Back sensor",
+                "Check the Blind sensors",
+                "Check Squaring Carriage sensors",
+                "Check the Back Jogger SS and OS sensor",
+                "Check the Under Blind & Covers Photocells"
+              ]
+            },
+            {
+              "sub_module": "Stacker Belts",
+              "checks": [
+                "Verify Transport Belt Tension",
+                "Verify Transport Belt condition",
+                "Verify Braking Belt condition",
+                "Verify Braking Belt Calibration",
+                "Check the Zero Position of the Braking Belts"
+              ]
+            },
+            {
+              "sub_module": "Y-Axis",
+              "checks": [
+                "Lateral Movement (Y-Axis) of the Squaring Carriage"
+              ]
+            },
+            {
+              "sub_module": "Blind",
+              "checks": [
+                "Verifythe Up/Down Movement of the Blind",
+                "Verify the Back/Forth Movement of the Blind"
+              ]
+            },
+            {
+              "sub_module": "Ultrasonic Sensor",
+              "checks": [
+                "Check the Ultrasonic Sensor condition",
+                "Check the cables connected well"
+              ]
+            },
+            {
+              "sub_module": "Backing Up",
+              "checks": [
+                "Backing Up the Stacker Parameters"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "IDS",
+          "sub_modules": [
+            {
+              "sub_module": "Tanks/Poyke",
+              "checks": [
+                "Check the Poyke for no leakage",
+                "Check the float cables are connected",
+                "CPC connectors sure connected and tight",
+                "Check the weight sensor connected"
+              ]
+            },
+            {
+              "sub_module": "Pumps",
+              "checks": [
+                "CPC connectors sure connected and tight",
+                "Check for no Ink leakage"
+              ]
+            },
+            {
+              "sub_module": "Pipes",
+              "checks": [
+                "CPC connectors sure connected and tight",
+                "Check for no Ink leakage",
+                "Check the tubes are not bent"
+              ]
+            },
+            {
+              "sub_module": "Lungs",
+              "checks": [
+                "CPC connectors sure connected and tight",
+                "Check for no Ink leakage"
+              ]
+            },
+            {
+              "sub_module": "Valves",
+              "checks": [
+                "CPC connectors sure connected and tight",
+                "No tubes damage or bent",
+                "No valve leakage",
+                "Valve operation via VNC"
+              ]
+            },
+            {
+              "sub_module": "Filter",
+              "checks": [
+                "CPC connectors sure connected and tight",
+                "Check for no Ink leakage"
+              ]
+            },
+            {
+              "sub_module": "El Cabinet",
+              "checks": [
+                "All the wires are tight",
+                "Check the cables"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "Flushing station",
+          "sub_modules": [
+            {
+              "sub_module": "Waste tank",
+              "checks": [
+                "Check for no leakage"
+              ]
+            },
+            {
+              "sub_module": "Pump",
+              "checks": [
+                "Working correctly",
+                "No ink leakage",
+                "CPC connectors sure connected and tight"
+              ]
+            },
+            {
+              "sub_module": "Pen Pocket",
+              "checks": [
+                "No air leakage",
+                "Closing well",
+                "Air and ink tubes connection"
+              ]
+            },
+            {
+              "sub_module": "Valves",
+              "checks": [
+                "CPC connectors sure connected and tight",
+                "No tubes damage or bent",
+                "No valve leakage",
+                "Valve operation via VNC",
+                "No dry ink on the waste valve"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "Data",
+          "sub_modules": [
+            {
+              "sub_module": "PEC",
+              "checks": [
+                "Panacia - insert corect",
+                "Cables conection and routing"
+              ]
+            },
+            {
+              "sub_module": "Dogmatic",
+              "checks": [
+                "Insert corrected",
+                "No ink on the connections"
+              ]
+            },
+            {
+              "sub_module": "Fiber cable",
+              "checks": [
+                "Routed correctly",
+                "No cable banded"
+              ]
+            },
+            {
+              "sub_module": "Connection between Dogmatic",
+              "checks": [
+                "Routed correctly",
+                "No cable banded"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "audit_type_key": "post_installation_audit",
+      "audit_type_label": "Post Installation Audit (אחרי התקנה)",
+      "systems": [
+        {
+          "system": "PreFeeder",
+          "sub_modules": [
+            {
+              "sub_module": "Pistons",
+              "checks": [
+                "check the piston leveling",
+                "Piston Limit Sensors condition -  \nsensors is well connected and not free",
+                "check open/close timing"
+              ]
+            },
+            {
+              "sub_module": "Upper belts",
+              "checks": [
+                "tension test in VNC"
+              ]
+            },
+            {
+              "sub_module": "Air Blowers",
+              "checks": [
+                "Moving free by hand",
+                "Operate it using VNC"
+              ]
+            },
+            {
+              "sub_module": "DLS syastem",
+              "checks": [
+                "check the up and down speed DLS"
+              ]
+            },
+            {
+              "sub_module": "Light Curtin",
+              "checks": [
+                "LC calibration - Lock mechanism is not loose, All the Light Curtin are the same Hight, Check the sensitivity"
+              ]
+            },
+            {
+              "sub_module": "Lift",
+              "checks": [
+                "Home position sensor - bottom  sensor is 3-4 mm from the flag",
+                "Chain is same tension",
+                "Check the lift home position stoppers - not free or damaged"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "Feeder",
+          "sub_modules": [
+            {
+              "sub_module": "Gripper Arm",
+              "checks": [
+                "Suction cups are not worn or damaged",
+                "Sensor - Operated correctly, no damage",
+                "Tubes are not touching the closest Gripper \nNo Damaged tubes",
+                "Vacuum generator,\n activate the Vacuum by VNC and check the  value",
+                "Check the Grippers for no free movement - leaner Bearings",
+                "Gripper bearings - not loose, move smoothly",
+                "Move the gripper back and FWD  and check for smooth movement and no bearings noise"
+              ]
+            },
+            {
+              "sub_module": "Weights",
+              "checks": [
+                "Free movement",
+                "The rolls are free",
+                "Stoppers are tight",
+                "Same Hight and aligned"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "Print Engine",
+          "sub_modules": [
+            {
+              "sub_module": "IR",
+              "checks": [
+                "Roller is rotating",
+                "Check the IR calibration is correct"
+              ]
+            },
+            {
+              "sub_module": "Cleaning system",
+              "checks": [
+                "Check the electrical cabinet for free wires",
+                "Check the unit without block holes",
+                "Check the system is working"
+              ]
+            },
+            {
+              "sub_module": "Capping",
+              "checks": [
+                "Lips test  - one PH per bar",
+                "Check capping open engle"
+              ]
+            },
+            {
+              "sub_module": "Z Axis",
+              "checks": [
+                "Check the all 4 Gears for no leakage",
+                "Lead screw - lubrication found on the screw",
+                "Sensors - Cables are not damage",
+                "Z belt tension same on both Z0 and Z1 - Visual check"
+              ]
+            },
+            {
+              "sub_module": "Ink beams ids panel",
+              "checks": [
+                "No ink leakage both sides"
+              ]
+            },
+            {
+              "sub_module": "Wiping arm",
+              "checks": [
+                "Check the Motor without leakage",
+                "Smooth movement of the arm",
+                "Connection bolts are tight",
+                "Belt is not worn"
+              ]
+            },
+            {
+              "sub_module": "Wiping cassettes",
+              "checks": [
+                "check the waste numbers in VNC send pic"
+              ]
+            },
+            {
+              "sub_module": "Pneumatic panel",
+              "checks": [
+                "Check for no air leakage",
+                "Check for no oil in the main filter"
+              ]
+            },
+            {
+              "sub_module": "Vision",
+              "checks": [
+                "Send Vision report from ATP"
+              ]
+            },
+            {
+              "sub_module": "Ink beams - Print Head",
+              "checks": [
+                "All the lock mechanism are factional correct \nYellow rubber is exist on all the PH visualy"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "Data",
+          "sub_modules": [
+            {
+              "sub_module": "Dogmatic",
+              "checks": [
+                "Insert corrected",
+                "No ink on the connections",
+                "All the 24V cables are routed properly and connected"
+              ]
+            },
+            {
+              "sub_module": "Fiber cable",
+              "checks": [
+                "Cables are Routed correctly",
+                "No cable banded",
+                "Check that the cable are well connected to the Dogmatic"
+              ]
+            },
+            {
+              "sub_module": "PH pockets",
+              "checks": [
+                "Check for the yellow rubber installed",
+                "Check Pockets without free movements"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "Media Handling",
+          "sub_modules": [
+            {
+              "sub_module": "Train",
+              "checks": [
+                "Open all 4 encoders covers and check \nEncoders cable - No Banded or damaged\nThe spring is ok\nLED is green\nNo bearings is damaged"
+              ]
+            },
+            {
+              "sub_module": "Communication cables",
+              "checks": [
+                "No damaged cables",
+                "Well attached and connected",
+                "Tie raps are not too tight"
+              ]
+            },
+            {
+              "sub_module": "Axiopea (Open 3 boxes)one master and 2 other",
+              "checks": [
+                "Check all the cables are connected and not free, Molex are not damaged, D type connector is locked",
+                "Driver - No movement found and locked",
+                "Coil brushes - All brushes are complete and touching the bus bar `"
+              ]
+            },
+            {
+              "sub_module": "ACS controller",
+              "checks": [
+                "Check that all Pi board connection are secured",
+                "Check all the Molex and cables are not damaged",
+                "Check that the fan is working",
+                "Check the Flex cables secured and not damaged"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "Linkage Conveyer",
+          "sub_modules": [
+            {
+              "sub_module": "Vacuum blower",
+              "checks": [
+                "Check the tubes connected correctly and no loose",
+                "Pump - connection, tubes and cables"
+              ]
+            },
+            {
+              "sub_module": "Fan bar",
+              "checks": [
+                "Activate all the Fans and check visual for operation"
+              ]
+            },
+            {
+              "sub_module": "Belt pistons",
+              "checks": [
+                "Check the piston connection - Screws + nuts",
+                "No oil marks close the piston",
+                "Grease on piston",
+                "Free movment"
+              ]
+            },
+            {
+              "sub_module": "Pneumatic panel",
+              "checks": [
+                "Check all the tubes connected correctly",
+                "Check all the tubes are not bent",
+                "No air leakage from the gauges and valves and valuese"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "Dryer",
+          "sub_modules": [
+            {
+              "sub_module": "IR lamps",
+              "checks": [
+                "Check the bulbs - connected right and fully insert",
+                "No burn sign on the edges of the bulbs"
+              ]
+            },
+            {
+              "sub_module": "Cassette",
+              "checks": [
+                "Open the cassette and check all the elec. Connections, retight screws (Heating elements, thermo switches, PT100, IR lamps)",
+                "Hot air nozzles are clear",
+                "Main IR connectors without burn marks on pins",
+                "Make sure that the thermo switch befor the heater is bypassed"
+              ]
+            },
+            {
+              "sub_module": "Chiller",
+              "checks": [
+                "Check Pressure In (bottom gauge) 2.5bar\nCheck Pressure out (top gauge) - 4 bar"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "OPVI",
+          "sub_modules": [
+            {
+              "sub_module": "Static guid",
+              "checks": [
+                "Calibration , alignment and lock mechanizm"
+              ]
+            },
+            {
+              "sub_module": "Tornado",
+              "checks": [
+                "all assy completed",
+                "Belt tension is correct"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "OPV",
+          "sub_modules": [
+            {
+              "sub_module": "Water System",
+              "checks": [
+                "check 2 bar water pressure"
+              ]
+            },
+            {
+              "sub_module": "Varnish Chamber",
+              "checks": [
+                "Check for no leakage during engage",
+                "Check the blades",
+                "Check the sealings",
+                "No Loose screw in push/pull"
+              ]
+            },
+            {
+              "sub_module": "Anilox",
+              "checks": [
+                "Check the roll without damaged/Cracks",
+                "Check the cables routed correct and no Damage"
+              ]
+            },
+            {
+              "sub_module": "Applicator",
+              "checks": [
+                "Check the roll without damaged/Cracks",
+                "Check the cables routed correct and no Damage"
+              ]
+            },
+            {
+              "sub_module": "Impression",
+              "checks": [
+                "Check the roll without damaged",
+                "Check black fanel calibration",
+                "Check the cables routed correct and no Damage"
+              ]
+            },
+            {
+              "sub_module": "F10",
+              "checks": [
+                "Check the tank without dry Varnish",
+                "Stirrer is working",
+                "F10 Weight scale is correct position",
+                "Check the sealing on top of the F10"
+              ]
+            },
+            {
+              "sub_module": "Air Condition",
+              "checks": [
+                "Check the correct Temp - 27- set up"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "Stacker",
+          "sub_modules": [
+            {
+              "sub_module": "Vacuum test",
+              "checks": [
+                "Calibrating the Positions of the OPV Exit, Eject, and Sample Sensors",
+                "From the OPV Exit sensor to the Eject sensor (should be approximately 845 mm [±10 mm]).",
+                "From the Eject sensor to the Sample sensor (should be approximately 470 mm [±10 mm]).",
+                "From the Sample sensor to the Transport Entrance sensor (should be approximately 490 mm [±10 mm]).",
+                "Verifying Transport Arm Pusher Calibration",
+                "Measure whether the lower fingers are centered between the pusher fingers.",
+                "Verifying Transport Belt Tension",
+                "Locate the OS transport belt tension screw, which is located on the outer surface of the chassis underneath the belt, as shown below.",
+                "Using a caliper, measure the distance between the washer and the block underneath it and verify that the washer is 20 mm away from the block.",
+                "Verifying Braking Belt Tension",
+                "Measure the tension spring. The proper length to achieve the correct belt tension is 75 mm.",
+                "Visually examine the position of the braking belts. If the edge of the red strap of one or more belts is not at the zero line, the belts must be calibrated, as described below.",
+                "Sensors and reflectors",
+                "Check all the sensors connected well",
+                "reflectors are in front of the sensor"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
