@@ -43,6 +43,31 @@ Render dashboard -> your service -> Settings -> Custom Domains -> add your domai
 Render's instructions for the DNS record to add (a `CNAME` pointing at your Render URL, usually).
 This is done in your domain registrar's DNS settings, which Claude Code cannot access.
 
+## 4.5. Validate against real Postgres before relying on it
+
+This dev machine has no local Postgres and no Docker, so the Postgres path was verified by
+static review (no raw SQL anywhere in the app, no SQLite-specific column types -- see
+`server/app/models.py`) rather than an actual run. Before you trust it in production, run the
+test suite against the real database once:
+
+```
+cd server
+AUDIT_BOT_DATABASE_URL=<Render's external Postgres connection string> ../venv/Scripts/python.exe -m pytest tests/ -v
+```
+
+Get the external connection string from the Render dashboard -> your database -> "External
+Database URL". Point this at the database Render just provisioned (it's empty at this point, so
+the test suite creating/dropping its own tables is safe) -- never point it at a database that
+already has real data, since the tests create and tear down rows freely.
+
+**Important**: importing the app also seeds the first admin account (using the well-known dev
+default `admin@auditbot.local` / `ChangeMe123!` unless `AUDIT_BOT_ADMIN_PASSWORD` is set in your
+local shell too, which it won't be by default). Running this test against the real production
+database leaves that default admin account sitting in it -- and since seeding only happens
+"if no user exists yet," your real deploy's `AUDIT_BOT_ADMIN_PASSWORD` won't override it. After
+this test run, delete and recreate the database in the Render dashboard (or manually delete that
+one seeded user) before pointing real users at the app.
+
 ## 5. Seeding real checklist/machine data
 
 The dev environment's data (checklist templates, machines, historical audits) lives in the local
