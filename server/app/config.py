@@ -24,7 +24,7 @@ REPORTS_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def _normalize_database_url(url: str) -> str:
-    # Render/Railway/Heroku-style managed Postgres add-ons hand out "postgres://" URLs, but
+    # Supabase (and Render/Railway/Heroku-style add-ons) hand out "postgres://" URLs, but
     # SQLAlchemy 1.4+ requires the "postgresql://" scheme -- and pin the driver explicitly so
     # it doesn't depend on whichever psycopg variant happens to be importable.
     if url.startswith("postgres://"):
@@ -34,14 +34,16 @@ def _normalize_database_url(url: str) -> str:
     return url
 
 
-# AUDIT_BOT_DATABASE_URL is this app's own explicit override. Falling back to plain DATABASE_URL
-# matters because that's the exact variable name Render/Railway auto-inject when you attach
-# their managed Postgres add-on -- no manual wiring needed if you just use their default name.
-_raw_database_url = (
-    os.environ.get("AUDIT_BOT_DATABASE_URL")
-    or os.environ.get("DATABASE_URL")
-    or f"sqlite:///{BASE_DIR / 'audit_bot.db'}"
-)
+# Postgres is the only supported database -- no local-file fallback. AUDIT_BOT_DATABASE_URL is
+# this app's own explicit variable; falling back to plain DATABASE_URL matters because that's
+# the name most platforms (Render, Railway, Supabase docs) use by convention.
+_raw_database_url = os.environ.get("AUDIT_BOT_DATABASE_URL") or os.environ.get("DATABASE_URL")
+if not _raw_database_url:
+    raise RuntimeError(
+        "No database configured. Set DATABASE_URL (or AUDIT_BOT_DATABASE_URL) to your Postgres "
+        "connection string, e.g.: "
+        "postgresql://postgres:<password>@db.<project-ref>.supabase.co:5432/postgres"
+    )
 DATABASE_URL = _normalize_database_url(_raw_database_url)
 
 SECRET_KEY = os.environ.get("AUDIT_BOT_SECRET_KEY", "dev-secret-change-me-in-production")

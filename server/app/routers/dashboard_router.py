@@ -71,8 +71,9 @@ def kpis(db: Session = Depends(get_db), _user: models.User = Depends(get_current
         for row in top_machines_rows
     ]
 
-    # Weekly audit-count trend for the last TREND_WEEKS weeks, bucketed in Python for
-    # portability (dev DB is SQLite; avoids DB-specific date-truncation SQL).
+    # Weekly audit-count trend for the last TREND_WEEKS weeks, bucketed in Python rather than
+    # with Postgres date-truncation SQL -- keeps this simple and avoids depending on a specific
+    # timezone/week-start convention on the DB side.
     trend_start = now - timedelta(weeks=TREND_WEEKS)
     week_counts = [0] * TREND_WEEKS
     recent_started_ats = (
