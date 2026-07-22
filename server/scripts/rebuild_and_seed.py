@@ -1,21 +1,24 @@
-"""Rebuilds the database for the new AuditType -> System -> SubModule -> ChecklistItem schema
-and re-seeds everything from authoritative sources:
+"""Seeds the AuditType -> System -> SubModule -> ChecklistItem schema from authoritative sources.
+Targets whatever Postgres database DATABASE_URL/AUDIT_BOT_DATABASE_URL points at (Supabase in
+production, a local/staging Postgres otherwise) -- this app has no SQLite fallback.
 
-  1. Preserves every existing user (name/email/role/password_hash) in memory before wiping the
-     DB, then restores them unchanged afterward -- this is the only way to carry forward the
-     real field engineer account ("Greg" / gregwas8@gmail.com) without resetting their password.
-  2. Wipes and recreates the schema from the current models.
+Default (full) behavior:
+  1. Preserves any existing users (name/email/role/password_hash) -- never overwrites a real
+     account's password. If the database is empty, seeds the default admin instead.
+  2. Ensures the schema exists (`Base.metadata.create_all` -- creates missing tables, never
+     drops or truncates existing data).
   3. Imports scripts/checklist_data_v2.json -- the authoritative, hand-verified checklist data
-     (2 audit types, each with systems -> sub-modules -> full-text checks) -- superseding the
-     earlier Excel-derived import entirely.
-  4. Imports data/customers.xlsx -> Machine records (same logic the old migrate_legacy.py used).
-  5. Re-creates every historical audit from scripts/legacy_audit_snapshot.json (taken immediately
-     before this migration) under a hidden "Legacy" audit type, preserving each result's exact
-     original text/value/attachments/tasks so no real audit data is lost, while keeping the new
-     JSON-derived systems as the only ones offered for new audits.
+     (2 audit types, each with systems -> sub-modules -> full-text checks).
+  4. Imports data/customers.xlsx -> Machine records.
+  5. Re-creates historical dev/test audits from scripts/legacy_audit_snapshot.json under a hidden
+     "Legacy" audit type, preserving each result's exact original text/value/attachments/tasks.
 
-Run once. Not idempotent by design (it always starts from a clean DB) -- re-run only if you
-intend to reset the dev database back to this seeded state.
+Pass --checklist-only to skip steps 4-5 -- use this against a production database that should
+start clean of local dev/test data (customers.xlsx machines, historical test audits).
+
+Not idempotent for the checklist import specifically: re-running adds another copy of each audit
+type/system/sub-module/item rather than updating in place, since nothing here dedupes against
+existing rows by name. Run it once per target database.
 """
 import json
 import sys
@@ -33,9 +36,7 @@ import pandas as pd  # noqa: E402
 from app import models  # noqa: E402
 from app.database import Base, SessionLocal, engine  # noqa: E402
 from app.auth import hash_password  # noqa: E402
-from app.config import BASE_DIR  # noqa: E402
 
-DB_PATH = BASE_DIR / "audit_bot.db"
 CHECKLIST_JSON_PATH = Path(__file__).parent / "checklist_data_v2.json"
 LEGACY_SNAPSHOT_PATH = Path(__file__).parent / "legacy_audit_snapshot.json"
 CUSTOMERS_EXCEL = PROJECT_ROOT / "data" / "customers.xlsx"
@@ -56,8 +57,9 @@ def requires_photo(text: str) -> bool:
 # ---------- Step 1: preserve existing users ----------
 
 def capture_existing_users() -> list[dict]:
-    if not DB_PATH.exists():
-        return []
+    """Postgres only now -- there's no local file whose existence would tell us "empty DB" the
+    way the old SQLite check did, so just query directly. Table may not exist yet on a genuinely
+    fresh database, which is exactly the "nothing to capture" case."""
     db = SessionLocal()
     try:
         return [
@@ -70,6 +72,8 @@ def capture_existing_users() -> list[dict]:
             }
             for u in db.query(models.User).all()
         ]
+    except Exception:
+        return []
     finally:
         db.close()
 
@@ -381,28 +385,31 @@ def reimport_legacy_audits(db, machine_model_by_name: dict) -> int:
 # ---------- Main ----------
 
 def main():
+    import argparse
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--checklist-only",
+        action="store_true",
+        help=(
+            "Only import checklist_data_v2.json (audit types/systems/sub-modules/checks). "
+            "Skips customers.xlsx -> Machines and re-importing historical dev/test audits -- "
+            "use this against a production database that should start clean of local dev data."
+        ),
+    )
+    args = parser.parse_args()
+
     print("1. Capturing existing users (to preserve real passwords)...")
     existing_users = capture_existing_users()
     print(f"   Found {len(existing_users)} existing users.")
 
-    print("2. Wiping and recreating schema...")
-    engine.dispose()
-    if DB_PATH.exists():
-        DB_PATH.unlink()
+    print("2. Ensuring schema exists (creates any missing tables; never drops data)...")
     Base.metadata.create_all(bind=engine)
 
     db = SessionLocal()
     try:
         if existing_users:
-            for u in existing_users:
-                db.add(
-                    models.User(
-                        name=u["name"], email=u["email"], role=models.UserRole(u["role"]),
-                        password_hash=u["password_hash"], is_active=u["is_active"],
-                    )
-                )
-            db.commit()
-            print(f"   Restored {len(existing_users)} users with original passwords intact.")
+            print(f"   {len(existing_users)} user(s) already present -- left untouched.")
         else:
             from app.seed import ensure_seed_admin
             ensure_seed_admin(db)
@@ -411,14 +418,17 @@ def main():
         stats = import_checklist_json(db)
         print(f"   {stats}")
 
-        print("4. Importing customers.xlsx -> Machines...")
-        machine_model_by_name: dict[str, models.MachineModel] = {}
-        count = import_customers(db, machine_model_by_name)
-        print(f"   Imported/ensured {count} machines.")
+        if args.checklist_only:
+            print("--checklist-only set: skipping customers.xlsx import and historical audit re-import.")
+        else:
+            print("4. Importing customers.xlsx -> Machines...")
+            machine_model_by_name: dict[str, models.MachineModel] = {}
+            count = import_customers(db, machine_model_by_name)
+            print(f"   Imported/ensured {count} machines.")
 
-        print("5. Re-importing historical audits under a hidden Legacy audit type...")
-        count = reimport_legacy_audits(db, machine_model_by_name)
-        print(f"   Re-created {count} historical audits.")
+            print("5. Re-importing historical audits under a hidden Legacy audit type...")
+            count = reimport_legacy_audits(db, machine_model_by_name)
+            print(f"   Re-created {count} historical audits.")
 
         print("Done.")
     finally:
