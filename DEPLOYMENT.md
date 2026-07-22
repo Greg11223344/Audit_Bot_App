@@ -106,6 +106,15 @@ There's no separate migration/init SQL script to run -- `server/app/main.py` alr
 `server/app/models.py`) if it doesn't already exist, every time the app boots. Against a fresh
 Supabase database, the very first boot creates the full schema automatically; against an
 already-initialized one, it's a no-op. This is the same mechanism local dev has always used.
+Verified directly against this project's Supabase instance: boot creates all 13 tables.
+
+**Gotcha carried over from real Postgres (didn't show up against local SQLite dev)**: Postgres
+actually enforces the foreign keys defined in `models.py`. A bulk `db.query(Model).delete()` skips
+SQLAlchemy's ORM-level cascade and Postgres correctly rejects it with a `ForeignKeyViolation` if
+child rows still reference it. To delete cascading data (e.g. wiping test fixtures), delete
+through the ORM instead -- `for obj in db.query(Model).all(): db.delete(obj)` -- so the
+`cascade="all, delete-orphan"` relationships actually fire, and delete parents-before-children in
+FK order (audits before audit types/machines, etc.).
 
 ## What's already done in the codebase
 
