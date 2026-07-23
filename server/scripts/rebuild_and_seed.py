@@ -80,53 +80,66 @@ def capture_existing_users() -> list[dict]:
 
 # ---------- Step 3: checklist_data_v2.json import ----------
 
+def import_one_audit_type(db, audit_type_data: dict, order_index: int) -> dict:
+    """Creates one audit_types[] entry (and its systems/sub-modules/items) from
+    checklist_data_v2.json. Shared by the full importer and scripts that add a single new audit
+    type to an already-seeded database (e.g. import_new_audit_type.py) -- no dedup/upsert logic,
+    so callers are responsible for not calling this twice for the same audit_type_key."""
+    stats = {"audit_types": 0, "systems": 0, "sub_modules": 0, "items": 0}
+
+    audit_type = models.AuditType(
+        key=audit_type_data["audit_type_key"],
+        label=audit_type_data["audit_type_label"],
+        order_index=order_index,
+    )
+    db.add(audit_type)
+    db.flush()
+    stats["audit_types"] += 1
+
+    for sys_index, system_data in enumerate(audit_type_data["systems"]):
+        system_def = models.SystemDef(
+            audit_type_id=audit_type.id,
+            name=system_data["system"],
+            order_index=sys_index,
+        )
+        db.add(system_def)
+        db.flush()
+        stats["systems"] += 1
+
+        for sm_index, sub_module_data in enumerate(system_data["sub_modules"]):
+            sub_module = models.SubModuleDef(
+                system_def_id=system_def.id,
+                name=sub_module_data["sub_module"],
+                order_index=sm_index,
+            )
+            db.add(sub_module)
+            db.flush()
+            stats["sub_modules"] += 1
+
+            for item_index, check_text in enumerate(sub_module_data["checks"]):
+                db.add(
+                    models.ChecklistItem(
+                        sub_module_id=sub_module.id,
+                        description=check_text,
+                        requires_photo=requires_photo(check_text),
+                        order_index=item_index,
+                    )
+                )
+                stats["items"] += 1
+
+    db.commit()
+    return stats
+
+
 def import_checklist_json(db) -> dict:
     data = json.loads(CHECKLIST_JSON_PATH.read_text(encoding="utf-8"))
 
     stats = {"audit_types": 0, "systems": 0, "sub_modules": 0, "items": 0}
-
     for at_index, audit_type_data in enumerate(data["audit_types"]):
-        audit_type = models.AuditType(
-            key=audit_type_data["audit_type_key"],
-            label=audit_type_data["audit_type_label"],
-            order_index=at_index,
-        )
-        db.add(audit_type)
-        db.flush()
-        stats["audit_types"] += 1
+        one_stats = import_one_audit_type(db, audit_type_data, at_index)
+        for k in stats:
+            stats[k] += one_stats[k]
 
-        for sys_index, system_data in enumerate(audit_type_data["systems"]):
-            system_def = models.SystemDef(
-                audit_type_id=audit_type.id,
-                name=system_data["system"],
-                order_index=sys_index,
-            )
-            db.add(system_def)
-            db.flush()
-            stats["systems"] += 1
-
-            for sm_index, sub_module_data in enumerate(system_data["sub_modules"]):
-                sub_module = models.SubModuleDef(
-                    system_def_id=system_def.id,
-                    name=sub_module_data["sub_module"],
-                    order_index=sm_index,
-                )
-                db.add(sub_module)
-                db.flush()
-                stats["sub_modules"] += 1
-
-                for item_index, check_text in enumerate(sub_module_data["checks"]):
-                    db.add(
-                        models.ChecklistItem(
-                            sub_module_id=sub_module.id,
-                            description=check_text,
-                            requires_photo=requires_photo(check_text),
-                            order_index=item_index,
-                        )
-                    )
-                    stats["items"] += 1
-
-    db.commit()
     return stats
 
 
