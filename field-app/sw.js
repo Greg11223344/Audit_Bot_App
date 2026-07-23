@@ -1,4 +1,4 @@
-const CACHE_NAME = "audit-bot-field-v1";
+const CACHE_NAME = "audit-bot-field-v2";
 const APP_SHELL = [
   "/app/",
   "/app/index.html",
@@ -39,19 +39,19 @@ self.addEventListener("fetch", (event) => {
 
   if (event.request.method !== "GET") return;
 
+  // Network-first: while online, always prefer the freshly deployed file (so a redeploy is
+  // visible immediately, without depending on someone remembering to bump CACHE_NAME). Only
+  // fall back to the cached copy when the network request fails, which is what gives the app
+  // its offline capability.
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      const networkFetch = fetch(event.request)
-        .then((response) => {
-          if (response.ok) {
-            const clone = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-          }
-          return response;
-        })
-        .catch(() => cached);
-
-      return cached || networkFetch;
-    })
+    fetch(event.request)
+      .then((response) => {
+        if (response.ok) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+        }
+        return response;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
