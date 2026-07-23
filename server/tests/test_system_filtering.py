@@ -34,7 +34,9 @@ def two_systems(auth_headers):
     system they belonged to) silently merged two unrelated systems' checks together."""
     db = SessionLocal()
     try:
-        audit_type = models.AuditType(key=f"test_type_{uuid.uuid4().hex[:8]}", label="Test Audit Type", order_index=0)
+        audit_type = models.AuditType(
+            key=f"test_type_{uuid.uuid4().hex[:8]}", label_en="Test Audit Type", label_he="Test Audit Type", order_index=0
+        )
         db.add(audit_type)
         db.flush()
 
@@ -216,7 +218,12 @@ def test_audit_types_endpoint_excludes_inactive_types(auth_headers):
     inactive_key = f"hidden_type_{uuid.uuid4().hex[:8]}"
     db = SessionLocal()
     try:
-        db.add(models.AuditType(key=inactive_key, label="Hidden Legacy Type", order_index=999, is_active=False))
+        db.add(
+            models.AuditType(
+                key=inactive_key, label_en="Hidden Legacy Type", label_he="Hidden Legacy Type",
+                order_index=999, is_active=False,
+            )
+        )
         db.commit()
     finally:
         db.close()

@@ -16,6 +16,13 @@ const state = {
 
 setLang(getLang());
 
+// Audit types carry both a Hebrew and an English label (server fields label_he/label_en) so the
+// UI only ever shows one language at a time, never "Machine Audit (בדיקה מלאה)" regardless of
+// the active language toggle.
+function auditTypeLabel(auditType) {
+  return getLang() === "he" ? auditType.label_he : auditType.label_en;
+}
+
 // ---------- Catalog caching ----------
 
 async function refreshCatalogFromServer() {
@@ -66,7 +73,7 @@ function newLocalAudit(machine, auditType, systemDefIds) {
     server_id: null,
     base_version: 0,
     machine_id: machine.id,
-    audit_type: auditType.label,
+    audit_type: auditTypeLabel(auditType),
     audit_type_id: auditType.id,
     system_def_ids: systemDefIds,
     status: "draft",
@@ -417,7 +424,7 @@ function renderSelectAuditType() {
     const systemCount = state.catalog.systemDefs.filter((s) => s.audit_type_id === auditType.id).length;
     const card = el(`
       <div class="machine-card">
-        <div class="machine-card-title">${auditType.label}</div>
+        <div class="machine-card-title">${auditTypeLabel(auditType)}</div>
         <div class="machine-card-sub">${systemCount} ${t("system")}</div>
       </div>
     `);
@@ -443,7 +450,7 @@ function renderSelectSystems() {
     <div class="screen">
       <button class="link back-btn">&larr; ${t("back")}</button>
       <h2>${t("selectSystems")}</h2>
-      <div class="machine-summary">${machine.customer} - ${machine.serial_number} - ${auditType.label}</div>
+      <div class="machine-summary">${machine.customer} - ${machine.serial_number} - ${auditTypeLabel(auditType)}</div>
       <div class="systems-list"></div>
       <button class="primary continue-btn" disabled>${t("continue")}</button>
     </div>

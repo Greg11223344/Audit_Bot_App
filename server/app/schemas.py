@@ -95,7 +95,8 @@ class AuditTypeOut(BaseModel):
 
     id: int
     key: str
-    label: str
+    label_en: str
+    label_he: str
     order_index: int
 
 

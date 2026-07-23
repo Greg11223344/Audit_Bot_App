@@ -52,7 +52,9 @@ def field_engineer_headers():
 def sample_audit(admin_headers):
     db = SessionLocal()
     try:
-        audit_type = models.AuditType(key=f"del_test_{uuid.uuid4().hex[:8]}", label="Delete Test Type", order_index=0)
+        audit_type = models.AuditType(
+            key=f"del_test_{uuid.uuid4().hex[:8]}", label_en="Delete Test Type", label_he="Delete Test Type", order_index=0
+        )
         db.add(audit_type)
         db.flush()
         system_def = models.SystemDef(audit_type_id=audit_type.id, name="Test System", order_index=0)

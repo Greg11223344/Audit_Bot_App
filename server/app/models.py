@@ -103,7 +103,8 @@ class AuditType(Base):
 
     id = Column(Integer, primary_key=True)
     key = Column(String(80), nullable=False, unique=True)
-    label = Column(String(200), nullable=False)
+    label_en = Column(String(200), nullable=False)
+    label_he = Column(String(200), nullable=False)
     order_index = Column(Integer, default=0)
     is_active = Column(Boolean, nullable=False, default=True)
     # Inactive audit types (e.g. a "legacy" bucket holding pre-migration data under its old,

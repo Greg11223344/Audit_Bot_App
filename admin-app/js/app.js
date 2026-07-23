@@ -10,6 +10,12 @@ const state = {
   machinesCache: [],
 };
 
+// Audit types carry both a Hebrew and an English label (label_he/label_en) so the UI only ever
+// shows one language, never "Machine Audit (בדיקה מלאה)" regardless of the active language.
+function auditTypeLabel(auditType) {
+  return getLang() === "he" ? auditType.label_he : auditType.label_en;
+}
+
 function el(html) {
   const template = document.createElement("template");
   template.innerHTML = html.trim();
@@ -558,7 +564,7 @@ async function renderMachines() {
     select.innerHTML = machineModels.map((m) => `<option value="${m.id}">${m.name}</option>`).join("");
   }
   for (const select of view.querySelectorAll('select[name="audit_type_id"]')) {
-    select.innerHTML = auditTypes.map((at) => `<option value="${at.id}">${at.label}</option>`).join("");
+    select.innerHTML = auditTypes.map((at) => `<option value="${at.id}">${auditTypeLabel(at)}</option>`).join("");
   }
 
   const machinesBody = view.querySelector(".machines-body");
@@ -570,7 +576,7 @@ async function renderMachines() {
 
   const systemsBody = view.querySelector(".systems-body");
   for (const at of auditTypes) {
-    const group = el(`<div class="system-group"><b>${at.label}</b></div>`);
+    const group = el(`<div class="system-group"><b>${auditTypeLabel(at)}</b></div>`);
     const systemsForType = systemDefs.filter((s) => s.audit_type_id === at.id);
     for (const s of systemsForType) {
       const count = s.sub_modules.reduce((sum, sm) => sum + sm.items.length, 0);

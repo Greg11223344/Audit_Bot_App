@@ -89,7 +89,8 @@ def import_one_audit_type(db, audit_type_data: dict, order_index: int) -> dict:
 
     audit_type = models.AuditType(
         key=audit_type_data["audit_type_key"],
-        label=audit_type_data["audit_type_label"],
+        label_en=audit_type_data["label_en"],
+        label_he=audit_type_data["label_he"],
         order_index=order_index,
     )
     db.add(audit_type)
@@ -255,7 +256,10 @@ def reimport_legacy_audits(db, machine_model_by_name: dict) -> int:
 
     snapshot = json.loads(LEGACY_SNAPSHOT_PATH.read_text(encoding="utf-8"))
 
-    legacy_audit_type = models.AuditType(key="legacy", label="Legacy (migrated data)", order_index=999, is_active=False)
+    legacy_audit_type = models.AuditType(
+        key="legacy", label_en="Legacy (migrated data)", label_he="ישן (נתונים שהועברו)",
+        order_index=999, is_active=False,
+    )
     db.add(legacy_audit_type)
     db.flush()
 

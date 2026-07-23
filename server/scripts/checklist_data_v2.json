@@ -2,7 +2,6 @@
   "audit_types": [
     {
       "audit_type_key": "machine_audit",
-      "audit_type_label": "Machine Audit (בדיקה מלאה)",
       "systems": [
         {
           "system": "PreFeeder",
@@ -844,11 +843,12 @@
             }
           ]
         }
-      ]
+      ],
+      "label_en": "Machine Audit",
+      "label_he": "בדיקה מלאה"
     },
     {
       "audit_type_key": "post_installation_audit",
-      "audit_type_label": "Post Installation Audit (אחרי התקנה)",
       "systems": [
         {
           "system": "PreFeeder",
@@ -1224,11 +1224,12 @@
             }
           ]
         }
-      ]
+      ],
+      "label_en": "Post Installation Audit",
+      "label_he": "אחרי התקנה"
     },
     {
       "audit_type_key": "fse_visit_check",
-      "audit_type_label": "FSE Visit Check (ביקור שגרתי)",
       "systems": [
         {
           "system": "PreFeeder",
@@ -1351,7 +1352,9 @@
             }
           ]
         }
-      ]
+      ],
+      "label_en": "FSE Visit Check",
+      "label_he": "ביקור שגרתי"
     }
   ]
 }
