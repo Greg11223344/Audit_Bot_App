@@ -1225,6 +1225,133 @@
           ]
         }
       ]
+    },
+    {
+      "audit_type_key": "fse_visit_check",
+      "audit_type_label": "FSE Visit Check (ביקור שגרתי)",
+      "systems": [
+        {
+          "system": "PreFeeder",
+          "sub_modules": [
+            {
+              "sub_module": "PreFeeder",
+              "checks": [
+                "Check upper tornado belts without damage and worn",
+                "Separate tornado belts without damage and worn",
+                "Impellers net condition",
+                "Check that blowers are not damage",
+                "Alignment pistons yellow air knife are not damage",
+                "Pistons air leaks"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "Feeder",
+          "sub_modules": [
+            {
+              "sub_module": "Feeder",
+              "checks": [
+                "Gripper suction cups are not worn or damaged",
+                "Check the grippers protected cover exist",
+                "Weights are equal height and move freely",
+                "Check grease on grippers rails"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "Bridge + MH",
+          "sub_modules": [
+            {
+              "sub_module": "Bridge + MH",
+              "checks": [
+                "Check wiping marks on all WWC",
+                "Aerosol connection joint (CPC) are not damage on operator side",
+                "Take a picture of the ink bar bottom surface",
+                "Guides - no ink found or banded",
+                "Vision scanners without ink on glass - take a picture from the scanners when they off",
+                "All the Axiopeia boxes are closed",
+                "Blankets vacuum holes are clogged - Random check on trains in service area",
+                "Check the oiling system exist on rails - need to activate from VNC (purge)"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "LC",
+          "sub_modules": [
+            {
+              "sub_module": "LC",
+              "checks": [
+                "Visual inspection for belt condition (Check during print)"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "Dryer",
+          "sub_modules": [
+            {
+              "sub_module": "Dryer",
+              "checks": [
+                "Visual inspection for belt condition (need to jog in slow)",
+                "Picture from Dryer alignment piston"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "OPVI/OPV",
+          "sub_modules": [
+            {
+              "sub_module": "OPVI/OPV",
+              "checks": [
+                "Tornado belts are not damage or missing",
+                "OPV/F10 visual inspection for varnish accumulation and leakage",
+                "OPV Dryer transport blue belts condition"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "Stacker",
+          "sub_modules": [
+            {
+              "sub_module": "Stacker",
+              "checks": [
+                "Check TB and BB belts condition (preform clean belt via VNC) (Check during print)",
+                "Check red roller shafts condition, no need to open the vacuum box"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "IDS - Ink Farm",
+          "sub_modules": [
+            {
+              "sub_module": "IDS - Ink Farm",
+              "checks": [
+                "Visual inspection for ink leak (Check during print)",
+                "Check for vacuum pressure indication -~0.9 bar",
+                "Check lungs container is empty",
+                "Picture from the IDS filters - expiration date"
+              ]
+            }
+          ]
+        },
+        {
+          "system": "General",
+          "sub_modules": [
+            {
+              "sub_module": "General",
+              "checks": [
+                "Quick inspection for air filters"
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }
