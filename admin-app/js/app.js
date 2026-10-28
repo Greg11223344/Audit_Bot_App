@@ -700,7 +700,14 @@ async function renderMachineDetail(machineId) {
 
 // ---------- Users (admin) ----------
 
-async function renderUsers() {
+const USER_ROLES = ["field_engineer", "internal", "admin"];
+
+function roleOptions(selected) {
+  return USER_ROLES.map((r) => `<option value="${r}" ${r === selected ? "selected" : ""}>${t("role_" + r)}</option>`).join("");
+}
+
+// `flash` is a success message carried across the re-render that follows creating a user.
+async function renderUsers(flash = "") {
   const shell = renderShell("#/users");
   root.innerHTML = "";
   root.appendChild(shell);
@@ -708,59 +715,123 @@ async function renderUsers() {
   const view = el(`
     <div>
       <h2>${t("users")}</h2>
+      <div class="success-message users-status" hidden></div>
+      <div class="error-message users-error" hidden></div>
       <table class="data-table">
-        <thead><tr><th>${t("name")}</th><th>${t("email")}</th><th>${t("role")}</th><th>${t("active")}</th></tr></thead>
+        <thead><tr><th>${t("name")}</th><th>${t("email")}</th><th>${t("role")}</th><th>${t("active")}</th><th></th></tr></thead>
         <tbody class="users-body"></tbody>
       </table>
+      <h3>${t("addUser")}</h3>
       <form class="add-user-form inline-form">
         <input name="name" placeholder="${t("name")}" required>
         <input name="email" type="email" placeholder="${t("email")}" required>
-        <input name="password" type="password" placeholder="${t("password")}" required>
-        <select name="role">
-          <option value="field_engineer">${t("role_field_engineer")}</option>
-          <option value="internal">${t("role_internal")}</option>
-          <option value="admin">${t("role_admin")}</option>
-        </select>
+        <input name="password" type="password" placeholder="${t("password")}" autocomplete="new-password" required>
+        <select name="role">${roleOptions("field_engineer")}</select>
         <button type="submit">${t("addUser")}</button>
       </form>
     </div>
   `);
 
+  const statusBox = view.querySelector(".users-status");
+  const errorBox = view.querySelector(".users-error");
+
+  function showStatus(message) {
+    errorBox.hidden = true;
+    statusBox.textContent = message;
+    statusBox.hidden = !message;
+  }
+
+  function showError(err) {
+    if (err.status === 401) return; // request() already redirected to the login screen
+    statusBox.hidden = true;
+    errorBox.textContent = err.status === 409 ? t("emailExists") : `${t("saveError")}: ${err.message}`;
+    errorBox.hidden = false;
+  }
+
+  showStatus(flash);
+
   const users = await Api.users();
   const body = view.querySelector(".users-body");
   for (const u of users) {
+    // An admin demoting or deactivating their own account would lock themselves out of this page.
+    const isSelf = state.user && state.user.id === u.id;
+    const selfLock = isSelf ? `disabled title="${t("cannotEditSelf")}"` : "";
     const row = el(`
-      <tr>
-        <td>${u.name}</td><td>${u.email}</td>
+      <tr class="${u.is_active ? "" : "user-inactive"}">
+        <td>${u.name}${isSelf ? ` <span class="badge">${t("you")}</span>` : ""}</td>
+        <td>${u.email}</td>
+        <td><select class="role-select" ${selfLock}>${roleOptions(u.role)}</select></td>
+        <td><input type="checkbox" class="active-check" ${u.is_active ? "checked" : ""} ${selfLock}></td>
         <td>
-          <select class="role-select">
-            <option value="field_engineer" ${u.role === "field_engineer" ? "selected" : ""}>${t("role_field_engineer")}</option>
-            <option value="internal" ${u.role === "internal" ? "selected" : ""}>${t("role_internal")}</option>
-            <option value="admin" ${u.role === "admin" ? "selected" : ""}>${t("role_admin")}</option>
-          </select>
+          <button type="button" class="change-password-btn">${t("changePassword")}</button>
+          <form class="password-form inline-form" hidden>
+            <input type="password" name="password" placeholder="${t("newPassword")}" autocomplete="new-password" required>
+            <button type="submit" class="primary">${t("save")}</button>
+          </form>
         </td>
-        <td><input type="checkbox" class="active-check" ${u.is_active ? "checked" : ""}></td>
       </tr>
     `);
-    row.querySelector(".role-select").onchange = async (e) => {
-      await Api.updateUser(u.id, { role: e.target.value });
+
+    const roleSelect = row.querySelector(".role-select");
+    roleSelect.onchange = async () => {
+      try {
+        await Api.updateUser(u.id, { role: roleSelect.value });
+        u.role = roleSelect.value;
+        showStatus(t("userSaved"));
+      } catch (err) {
+        roleSelect.value = u.role;
+        showError(err);
+      }
     };
-    row.querySelector(".active-check").onchange = async (e) => {
-      await Api.updateUser(u.id, { is_active: e.target.checked });
+
+    const activeCheck = row.querySelector(".active-check");
+    activeCheck.onchange = async () => {
+      try {
+        await Api.updateUser(u.id, { is_active: activeCheck.checked });
+        u.is_active = activeCheck.checked;
+        row.classList.toggle("user-inactive", !u.is_active);
+        showStatus(t("userSaved"));
+      } catch (err) {
+        activeCheck.checked = u.is_active;
+        showError(err);
+      }
     };
+
+    const passwordForm = row.querySelector(".password-form");
+    row.querySelector(".change-password-btn").onclick = () => {
+      passwordForm.hidden = !passwordForm.hidden;
+      if (!passwordForm.hidden) passwordForm.password.focus();
+    };
+    passwordForm.onsubmit = async (e) => {
+      e.preventDefault();
+      try {
+        await Api.updateUser(u.id, { password: passwordForm.password.value });
+        passwordForm.reset();
+        passwordForm.hidden = true;
+        showStatus(t("passwordChanged"));
+      } catch (err) {
+        showError(err);
+      }
+    };
+
     body.appendChild(row);
   }
 
   view.querySelector(".add-user-form").onsubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
-    await Api.createUser({
-      name: form.name.value.trim(),
-      email: form.email.value.trim(),
-      password: form.password.value,
-      role: form.role.value,
-    });
-    renderUsers();
+    try {
+      await Api.createUser({
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        password: form.password.value,
+        role: form.role.value,
+      });
+    } catch (err) {
+      showError(err);
+      return;
+    }
+    renderUsers(t("userCreated"));
   };
 
   setContent(shell, view);
@@ -796,6 +867,12 @@ async function router() {
   } else if (hash === "#/machines") {
     await renderMachines();
   } else if (hash === "#/users") {
+    // The nav link is admin-only already; this also covers a typed/bookmarked URL. The API
+    // enforces the same rule (403) regardless.
+    if (!(state.user && state.user.role === "admin")) {
+      location.hash = "#/dashboard";
+      return;
+    }
     await renderUsers();
   } else {
     await renderDashboard();
