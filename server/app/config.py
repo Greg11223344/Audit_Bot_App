@@ -46,6 +46,17 @@ if not _raw_database_url:
     )
 DATABASE_URL = _normalize_database_url(_raw_database_url)
 
+# Who may embed the front-ends in an <iframe> (sent as CSP frame-ancestors on every response).
+# Default: this server itself plus the Microsoft Teams hosts, so /app/ and /admin/ can run as a
+# Teams tab without being framable by arbitrary sites. teams.cloud.microsoft is the new Teams web
+# client's address. Override with a space- or comma-separated list in AUDIT_BOT_FRAME_ANCESTORS.
+_DEFAULT_FRAME_ANCESTORS = (
+    "'self' https://teams.microsoft.com https://*.teams.microsoft.com "
+    "https://*.office.com https://teams.cloud.microsoft"
+)
+_raw_frame_ancestors = os.environ.get("AUDIT_BOT_FRAME_ANCESTORS", "").strip() or _DEFAULT_FRAME_ANCESTORS
+FRAME_ANCESTORS = " ".join(a for a in _raw_frame_ancestors.replace(",", " ").split() if a)
+
 SECRET_KEY = os.environ.get("AUDIT_BOT_SECRET_KEY", "dev-secret-change-me-in-production")
 JWT_ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 14  # 14 days, field engineers need long offline sessions

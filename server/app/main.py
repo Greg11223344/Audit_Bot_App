@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
 from . import models
-from .config import ATTACHMENTS_DIR, BASE_DIR, IS_PRODUCTION, SECRET_KEY
+from .config import ATTACHMENTS_DIR, BASE_DIR, FRAME_ANCESTORS, IS_PRODUCTION, SECRET_KEY
 from .database import Base, SessionLocal, engine
 from .routers import (
     audits_router,
@@ -34,6 +34,18 @@ finally:
     db.close()
 
 app = FastAPI(title="Audit_bot API")
+
+
+# Lets the front-ends load as a Microsoft Teams tab (an <iframe> on teams.microsoft.com) while
+# still refusing to be framed by any other site. CSP frame-ancestors supersedes X-Frame-Options
+# (which can't express an allow-list), so any X-Frame-Options a lower layer adds is dropped.
+@app.middleware("http")
+async def frame_ancestors_header(request, call_next):
+    response = await call_next(request)
+    response.headers["Content-Security-Policy"] = f"frame-ancestors {FRAME_ANCESTORS}"
+    if "x-frame-options" in response.headers:
+        del response.headers["x-frame-options"]
+    return response
 
 app.include_router(auth_router.router)
 app.include_router(users_router.router)
